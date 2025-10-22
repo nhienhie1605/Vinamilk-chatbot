@@ -55,22 +55,20 @@ os.makedirs("models", exist_ok=True)
 import gdown
 
 # Tải vinallama-7b-chat_q5_0.gguf
-if not os.path.exists("models/vinallama-7b-chat_q5_0.gguf"):
-    print("Downloading vinallama-7b-chat_q5_0.gguf from Google Drive...")
-    gdown.download(
-        id="1y6bUTofGFcQMtMjpLEqbe_R1DyAFyTi_",  
-        output="models/vinallama-7b-chat_q5_0.gguf",
-        quiet=False
-    )
+url = "https://huggingface.co/vilm/vinallama-7b-chat-GGUF/resolve/main/vinallama-7b-chat_q5_0.gguf"
+model_path = "models/vinallama-7b-chat_q5_0.gguf"
 
-# Tải all-MiniLM-L6-v2-f16.gguf
-if not os.path.exists("models/all-MiniLM-L6-v2-f16.gguf"):
-    print("Downloading all-MiniLM-L6-v2-f16.gguf from Google Drive...")
-    gdown.download(
-        id="111OhdcksuuAIPctvwntSLKUTs9Iy35p3",  
-        output="models/all-MiniLM-L6-v2-f16.gguf",
-        quiet=False
-    )
+if not os.path.exists(model_path):
+    print("🔽 Downloading model from Hugging Face...")
+    with requests.get(url, stream=True) as r:
+        r.raise_for_status()
+        with open(model_path, "wb") as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                f.write(chunk)
+    print("✅ Download complete.")
+else:
+    print("✅ Model already exists, skipping download.")
+
 
 
 
