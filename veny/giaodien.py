@@ -1,5 +1,5 @@
 import torch
-
+import requests
 # Patch toàn bộ torch.nn.Module.to để tránh lỗi CUDA trên Streamlit Cloud
 def patched_to(self, device):
     return self  # Bỏ qua .to(), giữ nguyên ở CPU
